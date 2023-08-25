@@ -22,6 +22,11 @@ var dictionary = []string{
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	targetWord := dictionary[rand.Intn(len(dictionary))]
+	targetWord := getRandomWord()
 	fmt.Println(targetWord)
+}
+
+func getRandomWord() string {
+	targetWord := dictionary[rand.Intn(len(dictionary))]
+	return targetWord
 }
