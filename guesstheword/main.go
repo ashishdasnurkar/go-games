@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	"unicode"
 )
 
 var dictionary = []string{
@@ -23,9 +24,7 @@ var dictionary = []string{
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	targetWord := getRandomWord()
-	guessedLetters := map[rune]bool{}
-	guessedLetters[rune(targetWord[0])] = true
-	guessedLetters[rune(targetWord[len(targetWord)-1])] = true
+	guessedLetters := initializeGuessedWord(targetWord)
 	printGameState(targetWord, guessedLetters)
 	fmt.Println(targetWord)
 }
@@ -40,8 +39,17 @@ func printGameState(targetWord string, guessedLeters map[rune]bool) {
 		if guessedLeters[ch] == true {
 			fmt.Printf("%c", ch)
 		} else {
-			fmt.Print(" _ ")
+			fmt.Print("_")
 		}
+		fmt.Print(" ")
 	}
 	fmt.Println()
+}
+
+func initializeGuessedWord(targetWord string) map[rune]bool {
+	guessedLetters := map[rune]bool{}
+	guessedLetters[unicode.ToLower(rune(targetWord[0]))] = true
+	guessedLetters[unicode.ToLower(rune(targetWord[len(targetWord)-1]))] = true
+
+	return guessedLetters
 }
