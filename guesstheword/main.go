@@ -34,16 +34,29 @@ func getRandomWord() string {
 	return targetWord
 }
 
-func printGameState(targetWord string, guessedLeters map[rune]bool) {
-	for _, ch := range targetWord {
-		if guessedLeters[unicode.ToLower(ch)] == true {
-			fmt.Printf("%c", ch)
-		} else {
-			fmt.Print("_")
-		}
-		fmt.Print(" ")
-	}
+func printGameState(targetWord string, guessedLetters map[rune]bool) {
+	fmt.Println(getWordGuessingProgress(targetWord, guessedLetters))
 	fmt.Println()
+}
+
+func getWordGuessingProgress(
+	targetWord string,
+	guessedLetters map[rune]bool,
+) string {
+	result := ""
+	for _, ch := range targetWord {
+		if ch == ' ' {
+			result += " "
+		} else if guessedLetters[unicode.ToLower(ch)] {
+			result += fmt.Sprintf("%c", ch)
+		} else {
+			result += "_"
+		}
+
+		result += " "
+	}
+
+	return result
 }
 
 func initializeGuessedWord(targetWord string) map[rune]bool {
