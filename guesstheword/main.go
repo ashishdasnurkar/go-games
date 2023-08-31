@@ -36,7 +36,7 @@ func getRandomWord() string {
 
 func printGameState(targetWord string, guessedLeters map[rune]bool) {
 	for _, ch := range targetWord {
-		if guessedLeters[ch] == true {
+		if guessedLeters[unicode.ToLower(ch)] == true {
 			fmt.Printf("%c", ch)
 		} else {
 			fmt.Print("_")
