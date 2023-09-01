@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"time"
 	"unicode"
@@ -27,6 +28,7 @@ func main() {
 	guessedLetters := initializeGuessedWord(targetWord)
 	printGameState(targetWord, guessedLetters)
 	fmt.Println(targetWord)
+	fmt.Println(getHangmanDrawing(6))
 }
 
 func getRandomWord() string {
@@ -65,4 +67,14 @@ func initializeGuessedWord(targetWord string) map[rune]bool {
 	guessedLetters[unicode.ToLower(rune(targetWord[len(targetWord)-1]))] = true
 
 	return guessedLetters
+}
+
+func getHangmanDrawing(hangmanState int) string {
+	data, err := ioutil.ReadFile(
+		fmt.Sprintf("states/hangman%d", hangmanState))
+	if err != nil {
+		panic(err)
+	}
+
+	return string(data)
 }
