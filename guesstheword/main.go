@@ -11,6 +11,7 @@ import (
 	"unicode"
 )
 
+var inputReader = bufio.NewReader(os.Stdin)
 var dictionary = []string{
 	"Swashank",
 	"Phenomenon",
@@ -92,8 +93,8 @@ func getHangmanDrawing(hangmanState int) string {
 }
 
 func readInput() string {
-	r := bufio.NewReader(os.Stdin)
-	input, err := r.ReadString('\n')
+	fmt.Print("> ")
+	input, err := inputReader.ReadString('\n')
 	if err != nil {
 		panic(err)
 	}
