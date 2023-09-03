@@ -40,6 +40,12 @@ func main() {
 			fmt.Println("Please input a single letter only...")
 			continue
 		}
+		letter := rune(input[0])
+		if isCorrectGuess(targetWord, letter) {
+			guessedLetters[rune(input[0])] = true
+		} else {
+			hangmanState++
+		}
 	}
 }
 
@@ -99,4 +105,8 @@ func readInput() string {
 		panic(err)
 	}
 	return strings.TrimSpace(input)
+}
+
+func isCorrectGuess(targeWord string, letter rune) bool {
+	return strings.ContainsRune(targeWord, letter)
 }
