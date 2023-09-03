@@ -26,9 +26,9 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 	targetWord := getRandomWord()
 	guessedLetters := initializeGuessedWord(targetWord)
-	printGameState(targetWord, guessedLetters)
 	fmt.Println(targetWord)
-	fmt.Println(getHangmanDrawing(6))
+	hangmanState := 0
+	printGameState(targetWord, guessedLetters, hangmanState)
 }
 
 func getRandomWord() string {
@@ -36,9 +36,10 @@ func getRandomWord() string {
 	return targetWord
 }
 
-func printGameState(targetWord string, guessedLetters map[rune]bool) {
+func printGameState(targetWord string, guessedLetters map[rune]bool, hangmanState int) {
 	fmt.Println(getWordGuessingProgress(targetWord, guessedLetters))
 	fmt.Println()
+	fmt.Println(getHangmanDrawing(hangmanState))
 }
 
 func getWordGuessingProgress(
