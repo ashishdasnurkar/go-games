@@ -30,9 +30,8 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 	targetWord := getRandomWord()
 	guessedLetters := initializeGuessedWord(targetWord)
-	fmt.Println(targetWord)
 	hangmanState := 0
-	for {
+	for !isWordGuessed(targetWord, guessedLetters) && !isHangmanComplete(hangmanState) {
 		printGameState(targetWord, guessedLetters, hangmanState)
 		input := readInput()
 
@@ -46,6 +45,13 @@ func main() {
 		} else {
 			hangmanState++
 		}
+	}
+	printGameState(targetWord, guessedLetters, hangmanState)
+	fmt.Print("Game over ... ")
+	if isWordGuessed(targetWord, guessedLetters) {
+		fmt.Println("You won!!!")
+	} else if isHangmanComplete(hangmanState) {
+		fmt.Println("You lose :(")
 	}
 }
 
@@ -88,6 +94,18 @@ func initializeGuessedWord(targetWord string) map[rune]bool {
 	return guessedLetters
 }
 
+func isWordGuessed(targetWord string, guessedLetters map[rune]bool) bool {
+	for _, ch := range targetWord {
+		if !guessedLetters[unicode.ToLower(ch)] {
+			return false
+		}
+	}
+	return true
+}
+
+func isHangmanComplete(hangmanState int) bool {
+	return hangmanState >= 7
+}
 func getHangmanDrawing(hangmanState int) string {
 	data, err := ioutil.ReadFile(
 		fmt.Sprintf("states/hangman%d", hangmanState))
