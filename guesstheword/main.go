@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
+	"os"
+	"strings"
 	"time"
 	"unicode"
 )
@@ -28,7 +31,15 @@ func main() {
 	guessedLetters := initializeGuessedWord(targetWord)
 	fmt.Println(targetWord)
 	hangmanState := 0
-	printGameState(targetWord, guessedLetters, hangmanState)
+	for {
+		printGameState(targetWord, guessedLetters, hangmanState)
+		input := readInput()
+
+		if len(input) != 1 {
+			fmt.Println("Please input a single letter only...")
+			continue
+		}
+	}
 }
 
 func getRandomWord() string {
@@ -78,4 +89,13 @@ func getHangmanDrawing(hangmanState int) string {
 	}
 
 	return string(data)
+}
+
+func readInput() string {
+	r := bufio.NewReader(os.Stdin)
+	input, err := r.ReadString('\n')
+	if err != nil {
+		panic(err)
+	}
+	return strings.TrimSpace(input)
 }
